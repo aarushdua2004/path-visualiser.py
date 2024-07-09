@@ -2,21 +2,16 @@ from tkinter import messagebox, Tk
 import pygame
 import sys
 
-# Initialize pygame
 pygame.init()
 
-# Initialize Pygame's font module
 pygame.font.init()
 font = pygame.font.SysFont("Arial", 20)
 
-# Define window dimensions
 window_width = 600
 window_height = 600
 
-# Set up display
 window = pygame.display.set_mode((window_width, window_height))
 
-# Define grid dimensions
 columns = 25
 rows = 25
 box_width = window_width // columns
@@ -25,7 +20,6 @@ grid = []
 queue = []
 path = []
 
-# Box class definition
 class Box:
     def __init__(self, i, j):
         self.x = i
@@ -51,14 +45,12 @@ class Box:
         if self.y < rows - 1:
             self.neighbors.append(grid[self.x][self.y + 1])
 
-# Create grid
 for i in range(columns):
     arr = []
     for j in range(rows):
         arr.append(Box(i, j))
     grid.append(arr)
 
-# Set neighbors
 for i in range(columns):
     for j in range(rows):
         grid[i][j].set_neighbors()
@@ -90,7 +82,6 @@ def main():
                     j = y // box_height
                     if not grid[i][j].start and not grid[i][j].target:
                         grid[i][j].wall = True
-            # Check for left-click (set start box)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     if not start_box_set:
@@ -102,7 +93,6 @@ def main():
                         start_box.visited = True
                         queue.append(start_box)
                         start_box_set = True
-            # Check for right-click (set target box)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 3:
                     if not target_box_set:
@@ -143,7 +133,6 @@ def main():
             for j in range(rows):
                 box = grid[i][j]
                 box.draw(window, (30, 30, 30))
-
                 if box.queued:
                     box.draw(window, (200, 0, 0))
                 if box.visited:
@@ -157,7 +146,6 @@ def main():
                 if box.target:
                     box.draw(window, (200, 200, 0))
 
-        # Draw instructions
         instructions = [
             "Instructions:",
             "1. Left click to set start",
